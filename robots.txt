@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://prpf31.org/sitemap.xml
