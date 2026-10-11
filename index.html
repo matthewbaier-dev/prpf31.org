@@ -343,6 +343,8 @@ footer p { margin: 0 0 0.5rem; }
 }
 @media (max-width: 30rem) {
   body { font-size: 1.2rem; }
+  .textsize-label { display: none; }
+  .emblem { width: 12rem; }
   .btn { width: 100%; }
 }
 @media (prefers-reduced-motion: reduce) {
@@ -359,7 +361,7 @@ footer p { margin: 0 0 0.5rem; }
     <div class="topbar">
       <a class="site-name" href="#top" id="top">PRPF31<span>.org</span></a>
       <div class="textsize" role="group" aria-label="Text size">
-        <span aria-hidden="true">Text size</span>
+        <span class="textsize-label" aria-hidden="true">Text size</span>
         <button type="button" id="size-standard" data-size="standard" aria-pressed="true" aria-label="Standard text size">A</button>
         <button type="button" id="size-large" data-size="large" aria-pressed="false" aria-label="Large text size">A</button>
         <button type="button" id="size-larger" data-size="larger" aria-pressed="false" aria-label="Larger text size">A</button>
@@ -520,7 +522,7 @@ footer p { margin: 0 0 0.5rem; }
 <footer>
   <div class="wrap">
     <p>This site is for general information and is not medical advice. Please talk with a retina specialist or genetic counselor about your own situation.</p>
-    <p>&copy; 2026 PRPF31.org</p>
+    <p>&copy; 2026 PRPF31.org &middot; <a href="#top">Back to top</a></p>
   </div>
 </footer>
 
