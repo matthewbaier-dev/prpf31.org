@@ -173,6 +173,11 @@
   --marker: #0b232b;
   --marker-ink: #f8f4e9;
   --focus: #1d5546;
+  --dia-sage-fill: #d6e9e0;
+  --dia-sage-stroke: #1d5546;
+  --dia-gold-fill: #f6e2b4;
+  --dia-gold-stroke: #8a5a10;
+  --dia-off: #dfe5e2;
   --hero-bg: #012631;
   --hero-ink: #f8f4e9;
   --hero-muted: #c9d9d4;
@@ -194,6 +199,11 @@
     --marker: #f0c879;
     --marker-ink: #0a2b35;
     --focus: #f0c879;
+    --dia-sage-fill: #1c4741;
+    --dia-sage-stroke: #a9d8c3;
+    --dia-gold-fill: #4d3d16;
+    --dia-gold-stroke: #f0c879;
+    --dia-off: #1a333b;
     color-scheme: dark;
   }
 }
@@ -207,6 +217,11 @@
   --marker: #f0c879;
   --marker-ink: #0a2b35;
   --focus: #f0c879;
+  --dia-sage-fill: #1c4741;
+  --dia-sage-stroke: #a9d8c3;
+  --dia-gold-fill: #4d3d16;
+  --dia-gold-stroke: #f0c879;
+  --dia-off: #1a333b;
   color-scheme: dark;
 }
 
@@ -328,20 +343,56 @@ p { margin: 0 0 1rem; }
 footer { border-top: 1px solid var(--rule); padding-block: 2rem 2.5rem; font-size: 1.05rem; color: var(--muted); }
 footer p { margin: 0 0 0.5rem; }
 
-/* Wide screens: headings in a left column, reading text kept to a comfortable line length on the right */
+/* Wide screens: headings in a left column, reading text on the right */
 @media (min-width: 62rem) {
+  :root { --measure: 52rem; --page: 80rem; }
   main.wrap, footer .wrap { max-width: var(--page); }
   main section {
     display: grid;
-    grid-template-columns: 15rem minmax(0, var(--measure));
-    column-gap: 4rem;
+    grid-template-columns: 16rem minmax(0, var(--measure));
+    column-gap: 3.5rem;
     justify-content: center;
   }
   main section > h2 { grid-column: 1; grid-row: 1 / span 30; margin: 0; }
   main section > *:not(h2) { grid-column: 2; }
-  footer .wrap { display: grid; grid-template-columns: 15rem minmax(0, var(--measure)); column-gap: 4rem; justify-content: center; }
+  footer .wrap { display: grid; grid-template-columns: 16rem minmax(0, var(--measure)); column-gap: 3.5rem; justify-content: center; }
   footer .wrap > * { grid-column: 2; }
 }
+/* Very wide screens: a little more room and slightly larger text */
+@media (min-width: 90rem) {
+  :root { --measure: 56rem; --page: 86rem; }
+  body { font-size: 1.3125rem; }
+  main section, footer .wrap { grid-template-columns: 17rem minmax(0, var(--measure)); }
+}
+
+/* Diagrams, drawn in the page's own colors so they follow light and dark mode */
+figure.dia { margin: 1.75rem 0 2rem; max-width: 30rem; }
+figure.dia svg { display: block; width: 100%; height: auto; overflow: visible; }
+figure.dia figcaption { margin-top: 0.875rem; font-size: 1.125rem; line-height: 1.5; color: var(--muted); }
+.dia text { fill: var(--ink); font-family: var(--font); }
+.dia .t { font-size: 23px; }
+.dia .s { font-size: 21px; }
+.dia .b { font-weight: 700; }
+.dia .box { fill: var(--panel); stroke: var(--rule); stroke-width: 2; }
+.dia .sage { fill: var(--dia-sage-fill); stroke: var(--dia-sage-stroke); stroke-width: 2; }
+.dia .gold { fill: var(--dia-gold-fill); stroke: var(--dia-gold-stroke); stroke-width: 2.5; }
+.dia .off { fill: var(--dia-off); stroke: var(--muted); stroke-width: 2; stroke-dasharray: 5 4; }
+.dia .track { fill: var(--panel); stroke: var(--rule); stroke-width: 2; }
+.dia .need { stroke: var(--ink); stroke-width: 4; stroke-linecap: round; }
+.dia .ln { fill: none; stroke: var(--muted); stroke-width: 2.5; }
+.dia .thin { stroke-width: 1.75; }
+.dia .dash { stroke-dasharray: 6 5; }
+.dia .ah { fill: var(--muted); }
+.dia .eyeball { fill: var(--panel); stroke: var(--muted); stroke-width: 2.5; }
+.dia .lens { fill: var(--dia-sage-fill); stroke: var(--dia-sage-stroke); stroke-width: 2; }
+.dia .retina { fill: none; stroke: var(--dia-gold-stroke); stroke-width: 10; stroke-linecap: round; }
+.dia .ray { fill: none; stroke: var(--dia-gold-stroke); stroke-width: 1.75; stroke-dasharray: 5 5; }
+.dia .zoom { fill: none; stroke: var(--ink); stroke-width: 2.5; }
+figure.sim { max-width: none; }
+.sim-pair { display: grid; gap: 1rem 1.25rem; }
+.sim-pair svg { border-radius: 10px; border: 1px solid var(--rule); }
+.sim-label { font-weight: 700; margin: 0 0 0.4rem; }
+@media (min-width: 36rem) { .sim-pair { grid-template-columns: 1fr 1fr; } }
 @media (max-width: 30rem) {
   body { font-size: 1.2rem; }
   .textsize-label { display: none; }
@@ -394,7 +445,15 @@ footer p { margin: 0 0 0.5rem; }
   <section id="what-is-prpf31" aria-labelledby="what-h">
     <h2 id="what-h">PRPF31 Explained</h2>
     <p><a href="https://medlineplus.gov/genetics/condition/retinitis-pigmentosa/">Retinitis pigmentosa</a> (RP) is a group of inherited conditions in which the retina's light-sensing cells lose function over time. PRPF31 is one of the genes that cause it. RP caused by PRPF31 is also called RP11, its older name. Genetic test reports usually name the gene.</p>
+    <figure class="dia" id="dia-eye">
+      <svg viewBox="0 0 440 500" role="img" aria-label="Diagram of the eye. Light passes through the lens and lands on the retina at the back of the eye. A close-up shows the retina's light-sensing cells, the rods and cones, standing on a support layer called the RPE."><circle class="eyeball" cx="178" cy="140" r="112"/><path class="ln" d="M80 78Q32 140 80 202"/><path class="ray" d="M2 106L106 106L282 140"/><path class="ray" d="M2 140L106 140L282 140"/><path class="ray" d="M2 174L106 174L282 140"/><ellipse class="lens" cx="106" cy="140" rx="13" ry="40"/><path class="retina" d="M223.6 46.5A104 104 0 0 1 223.6 233.5"/><text class="s" x="2" y="92" text-anchor="start">Light</text><text class="s" x="100" y="208" text-anchor="start">Lens</text><path class="ln thin" d="M263.7 67.2L330 38"/><text class="s b" x="336" y="44" text-anchor="start">Retina</text><path class="ln dash thin" d="M250.2 208.2L4 290M278.2 208.2L436 290"/><circle class="zoom" cx="264.2" cy="198.2" r="18"/><rect class="box" x="2" y="290" width="436" height="206" rx="14"/><rect class="sage" x="22" y="326" width="18" height="104" rx="9"/><path class="sage" d="M52 430V384Q65 354 78 384V430Z"/><rect class="sage" x="90" y="326" width="18" height="104" rx="9"/><rect class="sage" x="120" y="326" width="18" height="104" rx="9"/><path class="sage" d="M150 430V384Q163 354 176 384V430Z"/><rect class="sage" x="188" y="326" width="18" height="104" rx="9"/><rect class="gold" x="16" y="434" width="208" height="30" rx="6"/><text class="s b" x="240" y="342" text-anchor="start">Light-sensing</text><text class="s" x="240" y="368" text-anchor="start">cells (rods</text><text class="s" x="240" y="394" text-anchor="start">and cones)</text><text class="s b" x="240" y="456" text-anchor="start">Support layer</text><text class="s" x="240" y="482" text-anchor="start">(RPE)</text></svg>
+      <figcaption>RP affects the retina at the back of the eye: its light-sensing cells and the support layer beneath them.</figcaption>
+    </figure>
     <p>Every cell edits its genetic instructions before using them, a step called splicing. The PRPF31 protein is one of the parts that hold the cell's editing machinery together. Most of us with PRPF31 RP have one copy of the gene that doesn't work, so our cells make less of the protein than they need. The leading explanation for why the retina suffers is that it is one of the busiest tissues in the body. The rest of the body does not seem to be affected.</p>
+    <figure class="dia" id="dia-splicing">
+      <svg viewBox="0 0 440 424" role="img" aria-label="How splicing works, in three steps. 1: a gene is copied, including parts that are not needed. 2: the cell's editing machine cuts out the unneeded parts; PRPF31 holds the machine together. 3: the edited copy is used to make protein."><defs><marker id="ah-spl" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path class="ah" d="M0 0L10 5L0 10z"/></marker></defs><text class="t b" x="0" y="24" text-anchor="start">1. The gene is copied</text><rect class="sage" x="1" y="40" width="68" height="30" rx="5"/><rect class="off" x="75" y="40" width="44" height="30" rx="5"/><rect class="sage" x="125" y="40" width="56" height="30" rx="5"/><rect class="off" x="187" y="40" width="52" height="30" rx="5"/><rect class="sage" x="245" y="40" width="64" height="30" rx="5"/><rect class="off" x="315" y="40" width="44" height="30" rx="5"/><rect class="sage" x="365" y="40" width="74" height="30" rx="5"/><rect class="sage" x="1" y="88" width="34" height="20" rx="5"/><text class="s" x="44" y="105" text-anchor="start">Kept</text><rect class="off" x="120" y="88" width="34" height="20" rx="5"/><text class="s" x="163" y="105" text-anchor="start">Cut out</text><path class="ln" d="M220 120V146" marker-end="url(#ah-spl)"/><text class="t b" x="0" y="178" text-anchor="start">2. Unneeded parts are cut out</text><rect class="sage" x="30" y="196" width="160" height="72" rx="22"/><rect class="sage" x="250" y="196" width="160" height="72" rx="22"/><rect class="gold" x="158" y="212" width="124" height="40" rx="10"/><text class="s b" x="220" y="239" text-anchor="middle">PRPF31</text><text class="s" x="220" y="296" text-anchor="middle">PRPF31 holds the machine together</text><path class="ln" d="M220 310V336" marker-end="url(#ah-spl)"/><text class="t b" x="0" y="368" text-anchor="start">3. Protein is made</text><rect class="sage" x="1" y="384" width="68" height="30" rx="5"/><rect class="sage" x="73" y="384" width="56" height="30" rx="5"/><rect class="sage" x="133" y="384" width="64" height="30" rx="5"/><rect class="sage" x="201" y="384" width="74" height="30" rx="5"/><path class="ln" d="M284 399H318" marker-end="url(#ah-spl)"/><rect class="gold" x="326" y="382" width="112" height="34" rx="17"/><text class="s b" x="382" y="406" text-anchor="middle">Protein</text></svg>
+      <figcaption>Splicing, step by step.</figcaption>
+    </figure>
     <p>PRPF31 RP is rare. Even so, PRPF31 is one of the most common genetic causes of autosomal dominant RP and is probably undercounted, because some carriers never have symptoms.</p>
   </section>
 
@@ -406,6 +465,13 @@ footer p { margin: 0 0 0.5rem; }
       <li><strong>Central Vision.</strong> This tends to last longest. Some people keep good reading vision until a late stage.</li>
       <li><strong>Other Changes.</strong> Some people also notice sensitivity to glare or changes in color vision.</li>
     </ul>
+    <figure class="dia sim" id="dia-tunnel">
+      <div class="sim-pair">
+        <div><p class="sim-label">Full Side Vision</p><svg viewBox="0 0 400 260" role="img" aria-label="Illustration of a street crossing with full side vision: a child with a ball on the left, a person ahead and a car coming on the right."><defs><linearGradient id="asky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#9fcbe6"/><stop offset="1" stop-color="#dcecf2"/></linearGradient></defs><rect width="400" height="260" fill="url(#asky)"/><circle cx="330" cy="40" r="20" fill="#fbe7a6"/><rect x="0" y="48" width="46" height="70" fill="#8aa3b2"/><rect x="40" y="72" width="38" height="46" fill="#9db2bf"/><rect x="74" y="34" width="54" height="84" fill="#7f98a8"/><rect x="124" y="62" width="40" height="56" fill="#9db2bf"/><rect x="230" y="52" width="48" height="66" fill="#8aa3b2"/><rect x="274" y="68" width="36" height="50" fill="#9db2bf"/><rect x="306" y="28" width="56" height="90" fill="#7f98a8"/><rect x="358" y="58" width="42" height="60" fill="#8aa3b2"/><rect x="0" y="116" width="400" height="144" fill="#b7c3a3"/><path d="M0 260L170 116H230L400 260Z" fill="#6f7a80"/><path d="M0 150L150 116H170L0 182Z" fill="#cfcabd"/><path d="M400 150L250 116H230L400 182Z" fill="#cfcabd"/><path d="M40 232L70 232L66 252L34 252Z" fill="#eeeeea"/><path d="M88 232L118 232L114 252L82 252Z" fill="#eeeeea"/><path d="M136 232L166 232L162 252L130 252Z" fill="#eeeeea"/><path d="M184 232L214 232L210 252L178 252Z" fill="#eeeeea"/><path d="M232 232L262 232L258 252L226 252Z" fill="#eeeeea"/><path d="M280 232L310 232L306 252L274 252Z" fill="#eeeeea"/><path d="M328 232L358 232L354 252L322 252Z" fill="#eeeeea"/><path d="M198 120V170" stroke="#e9d27a" stroke-width="3" stroke-dasharray="8 8"/><circle cx="200" cy="128" r="7" fill="#5a3b2b"/><rect x="192" y="136" width="16" height="22" rx="6" fill="#2f6f8f"/><rect x="193" y="157" width="5" height="14" fill="#2a3440"/><rect x="202" y="157" width="5" height="14" fill="#2a3440"/><circle cx="40" cy="160" r="12" fill="#e2b48c"/><path d="M30 156Q40 140 51 156Z" fill="#3b2a20"/><rect x="27" y="173" width="26" height="34" rx="9" fill="#d9573a"/><rect x="30" y="205" width="8" height="24" rx="3" fill="#2a3440"/><rect x="42" y="205" width="8" height="24" rx="3" fill="#2a3440"/><circle cx="74" cy="219" r="11" fill="#f2c230" stroke="#b98a12" stroke-width="2"/><path d="M300 196V176Q300 168 310 166L330 150Q336 146 346 146H384Q394 146 398 156L400 166V196Z" fill="#c8402f"/><path d="M334 166L344 154H368V166Z" fill="#cfe6f2"/><path d="M374 154H386L392 166H374Z" fill="#cfe6f2"/><circle cx="324" cy="198" r="13" fill="#20262b"/><circle cx="324" cy="198" r="5" fill="#9aa4aa"/><circle cx="382" cy="198" r="13" fill="#20262b"/><circle cx="382" cy="198" r="5" fill="#9aa4aa"/><rect x="300" y="174" width="8" height="6" rx="2" fill="#fbe7a6"/></svg></div>
+        <div><p class="sim-label">Narrowed Side Vision</p><svg viewBox="0 0 400 260" role="img" aria-label="The same street with narrowed side vision: only the person ahead can be seen. The child and the car at the edges are lost in darkness."><defs><linearGradient id="bsky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#9fcbe6"/><stop offset="1" stop-color="#dcecf2"/></linearGradient></defs><rect width="400" height="260" fill="url(#bsky)"/><circle cx="330" cy="40" r="20" fill="#fbe7a6"/><rect x="0" y="48" width="46" height="70" fill="#8aa3b2"/><rect x="40" y="72" width="38" height="46" fill="#9db2bf"/><rect x="74" y="34" width="54" height="84" fill="#7f98a8"/><rect x="124" y="62" width="40" height="56" fill="#9db2bf"/><rect x="230" y="52" width="48" height="66" fill="#8aa3b2"/><rect x="274" y="68" width="36" height="50" fill="#9db2bf"/><rect x="306" y="28" width="56" height="90" fill="#7f98a8"/><rect x="358" y="58" width="42" height="60" fill="#8aa3b2"/><rect x="0" y="116" width="400" height="144" fill="#b7c3a3"/><path d="M0 260L170 116H230L400 260Z" fill="#6f7a80"/><path d="M0 150L150 116H170L0 182Z" fill="#cfcabd"/><path d="M400 150L250 116H230L400 182Z" fill="#cfcabd"/><path d="M40 232L70 232L66 252L34 252Z" fill="#eeeeea"/><path d="M88 232L118 232L114 252L82 252Z" fill="#eeeeea"/><path d="M136 232L166 232L162 252L130 252Z" fill="#eeeeea"/><path d="M184 232L214 232L210 252L178 252Z" fill="#eeeeea"/><path d="M232 232L262 232L258 252L226 252Z" fill="#eeeeea"/><path d="M280 232L310 232L306 252L274 252Z" fill="#eeeeea"/><path d="M328 232L358 232L354 252L322 252Z" fill="#eeeeea"/><path d="M198 120V170" stroke="#e9d27a" stroke-width="3" stroke-dasharray="8 8"/><circle cx="200" cy="128" r="7" fill="#5a3b2b"/><rect x="192" y="136" width="16" height="22" rx="6" fill="#2f6f8f"/><rect x="193" y="157" width="5" height="14" fill="#2a3440"/><rect x="202" y="157" width="5" height="14" fill="#2a3440"/><circle cx="40" cy="160" r="12" fill="#e2b48c"/><path d="M30 156Q40 140 51 156Z" fill="#3b2a20"/><rect x="27" y="173" width="26" height="34" rx="9" fill="#d9573a"/><rect x="30" y="205" width="8" height="24" rx="3" fill="#2a3440"/><rect x="42" y="205" width="8" height="24" rx="3" fill="#2a3440"/><circle cx="74" cy="219" r="11" fill="#f2c230" stroke="#b98a12" stroke-width="2"/><path d="M300 196V176Q300 168 310 166L330 150Q336 146 346 146H384Q394 146 398 156L400 166V196Z" fill="#c8402f"/><path d="M334 166L344 154H368V166Z" fill="#cfe6f2"/><path d="M374 154H386L392 166H374Z" fill="#cfe6f2"/><circle cx="324" cy="198" r="13" fill="#20262b"/><circle cx="324" cy="198" r="5" fill="#9aa4aa"/><circle cx="382" cy="198" r="13" fill="#20262b"/><circle cx="382" cy="198" r="5" fill="#9aa4aa"/><rect x="300" y="174" width="8" height="6" rx="2" fill="#fbe7a6"/><defs><radialGradient id="tv" cx="200" cy="146" r="200" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#05090b" stop-opacity="0"/><stop offset="0.24" stop-color="#05090b" stop-opacity="0"/><stop offset="0.42" stop-color="#05090b" stop-opacity="1"/></radialGradient></defs><rect width="400" height="260" fill="url(#tv)"/></svg></div>
+      </div>
+      <figcaption>A simulated view. As side vision narrows, things at the edges, like the child and the car here, can go unseen.</figcaption>
+    </figure>
     <p>The pace varies widely, even within one family, and when symptoms start can depend partly on the type of PRPF31 change.</p>
     <p>RP can also bring <a href="https://www.nei.nih.gov/learn-about-eye-health/eye-conditions-and-diseases/retinitis-pigmentosa">cataracts and swelling in the retina</a>. Both can be treated, which is one reason regular check-ups matter.</p>
   </section>
@@ -413,7 +479,15 @@ footer p { margin: 0 0 0.5rem; }
   <section id="inheritance" aria-labelledby="inheritance-h">
     <h2 id="inheritance-h">Inheritance</h2>
     <p>PRPF31 RP is autosomal dominant: one changed copy of the gene is enough to put someone at risk. Each child of a person who carries it has a 50% chance of inheriting it, sons and daughters alike.</p>
+    <figure class="dia" id="dia-inheritance">
+      <svg viewBox="0 0 440 426" role="img" aria-label="A parent with the PRPF31 change and a parent without it. Each child gets one copy of the gene from each parent. Of four children, two inherit the change, one with symptoms and one without, and two do not inherit it."><rect class="box" x="2" y="2" width="206" height="116" rx="14"/><text class="s b" x="105" y="36" text-anchor="middle">Parent with</text><text class="s b" x="105" y="62" text-anchor="middle">the change</text><rect class="off" x="53" y="80" width="48" height="20" rx="10"/><rect class="sage" x="109" y="80" width="48" height="20" rx="10"/><rect class="box" x="232" y="2" width="206" height="116" rx="14"/><text class="s b" x="335" y="36" text-anchor="middle">Parent without</text><text class="s b" x="335" y="62" text-anchor="middle">the change</text><rect class="sage" x="283" y="80" width="48" height="20" rx="10"/><rect class="sage" x="339" y="80" width="48" height="20" rx="10"/><path class="ln" d="M208 60H232M220 60V140H24"/><path class="ln" d="M24 140V364"/><path class="ln" d="M24 172H44"/><rect class="off" x="50" y="162" width="48" height="20" rx="10"/><rect class="sage" x="106" y="162" width="48" height="20" rx="10"/><text class="s b" x="176" y="168" text-anchor="start">Inherited</text><text class="s" x="176" y="193" text-anchor="start">with symptoms</text><path class="ln" d="M24 236H44"/><rect class="off" x="50" y="226" width="48" height="20" rx="10"/><rect class="sage" x="106" y="226" width="48" height="20" rx="10"/><text class="s b" x="176" y="232" text-anchor="start">Inherited</text><text class="s" x="176" y="257" text-anchor="start">no symptoms</text><path class="ln" d="M24 300H44"/><rect class="sage" x="50" y="290" width="48" height="20" rx="10"/><rect class="sage" x="106" y="290" width="48" height="20" rx="10"/><text class="s b" x="176" y="307" text-anchor="start">Not inherited</text><path class="ln" d="M24 364H44"/><rect class="sage" x="50" y="354" width="48" height="20" rx="10"/><rect class="sage" x="106" y="354" width="48" height="20" rx="10"/><text class="s b" x="176" y="371" text-anchor="start">Not inherited</text><rect class="off" x="2" y="400" width="44" height="20" rx="10"/><text class="s" x="56" y="416" text-anchor="start">Changed copy</text><rect class="sage" x="232" y="400" width="44" height="20" rx="10"/><text class="s" x="286" y="416" text-anchor="start">Working copy</text></svg>
+      <figcaption>Each child has a 50% chance of inheriting the change. Some who inherit it never develop symptoms but can still pass it on.</figcaption>
+    </figure>
     <p>What makes PRPF31 unusual is that some carriers never lose any sight. This is called <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC7065041/">incomplete penetrance</a>. In some people the healthy copy of the gene works harder and makes up most of the shortfall. Inherited differences, some near the gene and some elsewhere in our DNA, act like a dimmer on the healthy copy and help decide who is affected. So the condition can seem to skip a generation: a parent with normal sight can still pass it on.</p>
+    <figure class="dia" id="dia-dimmer">
+      <svg viewBox="0 0 440 304" role="img" aria-label="Two people with the same PRPF31 change. In the first, the healthy copy is turned up and makes enough PRPF31 for the retina, so sight is kept. In the second, it is turned down, makes too little and vision is lost."><path class="need" d="M8 2V30"/><text class="s" x="22" y="24" text-anchor="start">What the retina needs</text><text class="t b" x="0" y="76" text-anchor="start">Healthy copy turned up</text><rect class="track" x="1" y="92" width="438" height="32" rx="16"/><rect class="gold" x="1" y="92" width="394" height="32" rx="16"/><path class="need" d="M264 84V132"/><text class="s" x="0" y="160" text-anchor="start">Enough PRPF31: sight kept</text><text class="t b" x="0" y="212" text-anchor="start">Healthy copy turned down</text><rect class="track" x="1" y="228" width="438" height="32" rx="16"/><rect class="gold" x="1" y="228" width="174" height="32" rx="16"/><path class="need" d="M264 220V268"/><text class="s" x="0" y="296" text-anchor="start">Too little PRPF31: vision loss</text></svg>
+      <figcaption>Two people can carry the identical change. What differs is how hard their healthy copy works.</figcaption>
+    </figure>
     <p>Occasionally a PRPF31 change appears for the first time in someone with no family history. A genetic counselor can help a family work through who should be tested and when.</p>
   </section>
 
@@ -428,6 +502,10 @@ footer p { margin: 0 0 0.5rem; }
   <section id="advantage" aria-labelledby="advantage-h">
     <h2 id="advantage-h">Our Advantage</h2>
     <p class="lead">One treatment for all</p>
+    <figure class="dia" id="dia-one-treatment">
+      <svg viewBox="0 0 440 328" role="img" aria-label="Different PRPF31 changes, such as a missing section, an early stop or a splicing error, all lead to too little PRPF31 protein. So one treatment that raises PRPF31 could help nearly everyone."><defs><marker id="ah-one" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path class="ah" d="M0 0L10 5L0 10z"/></marker></defs><rect class="off" x="2" y="2" width="132" height="76" rx="12"/><text class="s b" x="68" y="34" text-anchor="middle">Missing</text><text class="s b" x="68" y="60" text-anchor="middle">section</text><rect class="off" x="154" y="2" width="132" height="76" rx="12"/><text class="s b" x="220" y="34" text-anchor="middle">Early</text><text class="s b" x="220" y="60" text-anchor="middle">stop</text><rect class="off" x="306" y="2" width="132" height="76" rx="12"/><text class="s b" x="372" y="34" text-anchor="middle">Splicing</text><text class="s b" x="372" y="60" text-anchor="middle">error</text><path class="ln" d="M68 78V102H372V78M220 78V128" /><path class="ln" d="M220 102V130" marker-end="url(#ah-one)"/><rect class="box" x="30" y="136" width="380" height="64" rx="12"/><text class="t b" x="220" y="176" text-anchor="middle">Too little PRPF31 protein</text><path class="ln" d="M220 200V230" marker-end="url(#ah-one)"/><rect class="gold" x="30" y="236" width="380" height="88" rx="12"/><text class="t b" x="220" y="274" text-anchor="middle">One treatment</text><text class="t b" x="220" y="304" text-anchor="middle">raises PRPF31</text></svg>
+      <figcaption>Whatever the change, the result is the same. So the fix can be the same.</figcaption>
+    </figure>
     <p>Most inherited eye diseases need a treatment built for the specific gene and sometimes for the specific change in it. PRPF31 is different. Almost every PRPF31 change ends the same way: our cells make too little PRPF31 protein. So a treatment that raises the protein could help nearly all of us, whatever our exact change.</p>
     <p>The same idea, turning up the healthy copy of a gene, is being tested in other conditions caused by too little of a protein, including a severe childhood epilepsy and an inherited optic nerve disease. Progress in any of them strengthens the case for all of them.</p>
   </section>
@@ -436,6 +514,10 @@ footer p { margin: 0 0 0.5rem; }
     <h2 id="research-h">Research</h2>
     <p>There is currently no approved treatment for PRPF31 RP.</p>
     <p>Research is active. Because most of us make too little PRPF31 protein, most work aims to raise the amount, by one of three routes:</p>
+    <figure class="dia" id="dia-routes">
+      <svg viewBox="0 0 440 264" role="img" aria-label="Three routes to more PRPF31 protein: turn up the healthy copy, add a working copy or repair the faulty copy."><defs><marker id="ah-rt" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path class="ah" d="M0 0L10 5L0 10z"/></marker></defs><rect class="box" x="2" y="2" width="286" height="76" rx="12"/><text class="t b" x="20" y="34" text-anchor="start">Turn up</text><text class="s" x="20" y="62" text-anchor="start">the healthy copy</text><path class="ln" d="M288 40H330" marker-end="url(#ah-rt)"/><rect class="box" x="2" y="94" width="286" height="76" rx="12"/><text class="t b" x="20" y="126" text-anchor="start">Add</text><text class="s" x="20" y="154" text-anchor="start">a working copy</text><path class="ln" d="M288 132H330" marker-end="url(#ah-rt)"/><rect class="box" x="2" y="186" width="286" height="76" rx="12"/><text class="t b" x="20" y="218" text-anchor="start">Repair</text><text class="s" x="20" y="246" text-anchor="start">the faulty copy</text><path class="ln" d="M288 224H330" marker-end="url(#ah-rt)"/><rect class="gold" x="338" y="2" width="100" height="260" rx="14"/><text class="s b" x="388" y="104" text-anchor="middle">More</text><text class="s b" x="388" y="132" text-anchor="middle">PRPF31</text><text class="s b" x="388" y="160" text-anchor="middle">protein</text></svg>
+      <figcaption>Each route works on a different copy of the gene. All three aim for the same result.</figcaption>
+    </figure>
     <ul class="routes">
       <li><h3>Turn Up the Healthy Copy</h3><p>Repeated injections into the eye help the working copy make more protein. This approach is in clinical trials.</p></li>
       <li><h3>Add a Working Copy</h3><p>A harmless virus delivers a fresh copy of the gene to the retina, ideally in a single treatment. Lab studies in patients' own retinal cells have shown this can repair the cells' editing and their cleanup work. It is in preclinical development.</p></li>
