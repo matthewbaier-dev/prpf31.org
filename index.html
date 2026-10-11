@@ -20,9 +20,8 @@
 <link rel="icon" href="favicon.ico" sizes="any">
 <link rel="icon" type="image/png" href="favicon.png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap">
+<link rel="preload" href="assets/fonts/atkinson-hyperlegible-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/atkinson-hyperlegible-latin-700-normal.woff2" as="font" type="font/woff2" crossorigin>
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -161,6 +160,8 @@
 }
 </script>
 <style>
+@font-face { font-family: "Atkinson Hyperlegible"; font-style: normal; font-weight: 400; font-display: swap; src: url("assets/fonts/atkinson-hyperlegible-latin-400-normal.woff2") format("woff2"); }
+@font-face { font-family: "Atkinson Hyperlegible"; font-style: normal; font-weight: 700; font-display: swap; src: url("assets/fonts/atkinson-hyperlegible-latin-700-normal.woff2") format("woff2"); }
 /* Layout: one calm reading column on a pale sage ground, opened by a deep-navy band where the emblem rises like the logo's sunrise. Built for low vision first. */
 :root {
   --bg: #f3f6f4;
@@ -291,6 +292,7 @@ h2 { font-size: clamp(1.7rem, 1.3rem + 1.4vw, 2.1rem); line-height: 1.2; margin:
 h3 { font-size: 1.3rem; margin: 0; line-height: 1.3; text-wrap: balance; }
 p { margin: 0 0 1rem; }
 .muted { color: var(--muted); }
+.lead { font-size: 1.5rem; font-weight: 700; line-height: 1.35; margin-bottom: 1rem; text-wrap: balance; }
 
 .keypoints { list-style: none; margin: 0 0 1rem; padding: 0; display: grid; gap: 1rem; }
 .keypoints li { margin: 0; }
@@ -383,7 +385,7 @@ footer p { margin: 0 0 0.5rem; }
   <section id="what-is-prpf31" aria-labelledby="what-h">
     <h2 id="what-h">PRPF31 Explained</h2>
     <p><a href="https://medlineplus.gov/genetics/condition/retinitis-pigmentosa/">Retinitis pigmentosa</a> (RP) is a group of inherited conditions in which the retina's light-sensing cells lose function over time. PRPF31 is one of the genes that cause it. RP caused by PRPF31 is also called RP11, its older name. Genetic test reports usually name the gene.</p>
-    <p>Every cell edits its genetic instructions before using them, a step called splicing. The PRPF31 protein is one of the parts that hold the cell's editing machinery together. Most of us with PRPF31 RP have one copy of the gene that doesn't work, so our cells make only about half the protein they need. The retina, one of the busiest tissues in the body, is the part that suffers. The rest of the body does not seem to be affected.</p>
+    <p>Every cell edits its genetic instructions before using them, a step called splicing. The PRPF31 protein is one of the parts that hold the cell's editing machinery together. Most of us with PRPF31 RP have one copy of the gene that doesn't work, so our cells make less of the protein than they need. The leading explanation for why the retina suffers is that it is one of the busiest tissues in the body. The rest of the body does not seem to be affected.</p>
     <p>PRPF31 RP is rare. Even so, PRPF31 is one of the most common genetic causes of autosomal dominant RP and is probably undercounted, because some carriers never have symptoms.</p>
   </section>
 
@@ -402,7 +404,7 @@ footer p { margin: 0 0 0.5rem; }
   <section id="inheritance" aria-labelledby="inheritance-h">
     <h2 id="inheritance-h">Inheritance</h2>
     <p>PRPF31 RP is autosomal dominant: one changed copy of the gene is enough to put someone at risk. Each child of a person who carries it has a 50% chance of inheriting it, sons and daughters alike.</p>
-    <p>What makes PRPF31 unusual is that some carriers never lose any sight. This is called <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC7065041/">incomplete penetrance</a>. In some people the healthy copy of the gene works harder and makes up most of the shortfall. Inherited differences elsewhere in our DNA act like a dimmer on the healthy copy and help decide who is affected. So the condition can seem to skip a generation: a parent with normal sight can still pass it on.</p>
+    <p>What makes PRPF31 unusual is that some carriers never lose any sight. This is called <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC7065041/">incomplete penetrance</a>. In some people the healthy copy of the gene works harder and makes up most of the shortfall. Inherited differences, some near the gene and some elsewhere in our DNA, act like a dimmer on the healthy copy and help decide who is affected. So the condition can seem to skip a generation: a parent with normal sight can still pass it on.</p>
     <p>Occasionally a PRPF31 change appears for the first time in someone with no family history. A genetic counselor can help a family work through who should be tested and when.</p>
   </section>
 
@@ -414,16 +416,24 @@ footer p { margin: 0 0 0.5rem; }
     <p>Outside the US, <a href="https://retina-international.org">Retina International</a> can point to patient organizations and testing in other countries.</p>
   </section>
 
+  <section id="advantage" aria-labelledby="advantage-h">
+    <h2 id="advantage-h">Our Advantage</h2>
+    <p class="lead">One treatment could help nearly all of us.</p>
+    <p>Most inherited eye diseases need a treatment built for the specific gene and sometimes for the specific change in it. PRPF31 is different. Almost every PRPF31 change ends the same way: our cells make too little PRPF31 protein. So a treatment that raises the protein could help nearly all of us, whatever our exact change.</p>
+    <p>The same idea, turning up the healthy copy of a gene, is being tested in other conditions caused by too little of a protein, including a severe childhood epilepsy and an inherited optic nerve disease. Progress in any of them strengthens the case for all of them.</p>
+  </section>
+
   <section id="treatment-research" aria-labelledby="research-h">
     <h2 id="research-h">Research</h2>
     <p>There is currently no approved treatment for PRPF31 RP.</p>
     <p>Research is active. Because most of us make too little PRPF31 protein, most work aims to raise the amount, by one of three routes:</p>
     <ul class="routes">
-      <li><h3>Turn Up the Healthy Copy</h3><p>Repeated injections into the eye help the working copy make more protein. This approach is in clinical trials, with a larger trial being planned.</p></li>
+      <li><h3>Turn Up the Healthy Copy</h3><p>Repeated injections into the eye help the working copy make more protein. This approach is in clinical trials.</p></li>
       <li><h3>Add a Working Copy</h3><p>A harmless virus delivers a fresh copy of the gene to the retina, ideally in a single treatment. <a href="https://www.nature.com/articles/s41467-026-78065-z">Lab studies in patients' own retinal cells</a> have shown this can repair the cells' editing and their cleanup work. It is in preclinical development.</p></li>
       <li><h3>Repair the Faulty Copy</h3><p>Short strands of genetic material correct how the faulty copy is read. This fits only certain specific changes. <a href="https://www.avcr.cz/en/news-archive/Researchers-Correct-Genetic-Defect-Associated-with-Retinitis-Pigmentosa-Using-Modified-RNA-Molecules/">Researchers have shown it</a> partly correcting one such change in patient cells.</p></li>
     </ul>
-    <p>Some approaches being studied for RP in general work regardless of the gene involved, including optogenetics, which makes surviving retinal cells sensitive to light, and cell-based therapies.</p>
+    <p>Some approaches being studied for RP in general work regardless of the gene involved, including optogenetics, which makes surviving retinal cells sensitive to light, and cell-based therapies. Some late-stage RP trials are open to people with any RP gene, PRPF31 included.</p>
+    <p>All of these approaches are investigational. None has yet been proven safe and effective for PRPF31 RP.</p>
     <p>We don't endorse any company, treatment or trial. To see which clinical trials are recruiting, <a href="https://clinicaltrials.gov/search?term=PRPF31">search ClinicalTrials.gov for PRPF31</a>.</p>
   </section>
 
@@ -511,7 +521,7 @@ footer p { margin: 0 0 0.5rem; }
 
   <section id="about" aria-labelledby="about-h">
     <h2 id="about-h">About Us</h2>
-    <p>PRPF31.org is the patient community for PRPF31 retinitis pigmentosa. It was started in 2026 by people living with PRPF31 for patients, carriers and families wherever they live. It gives our community one voice with researchers, doctors and foundations.</p>
+    <p>PRPF31.org is the patient community for PRPF31 retinitis pigmentosa. It was started in 2026 by people living with PRPF31 for patients, carriers and families wherever they live. It helps our community speak with researchers, doctors and foundations. We welcome links and partnerships with other patient organizations.</p>
     <p>It is independent: it doesn't sell anything and doesn't endorse any company, treatment or trial.</p>
     <p>Questions or ideas? <a href="https://www.facebook.com/profile.php?id=61595063795062">Message us on Facebook</a>.</p>
   </section>
@@ -521,7 +531,7 @@ footer p { margin: 0 0 0.5rem; }
 <footer>
   <div class="wrap">
     <p>This site is for general information and is not medical advice. Please talk with a retina specialist or genetic counselor about your own situation.</p>
-    <p>&copy; 2026 PRPF31.org &middot; <a href="#top">Back to top</a></p>
+    <p>&copy; 2026 PRPF31.org &middot; <a href="privacy.html">Privacy</a> &middot; <a href="#top">Back to top</a></p>
   </div>
 </footer>
 
