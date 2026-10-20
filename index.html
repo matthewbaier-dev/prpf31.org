@@ -20,6 +20,7 @@
 <link rel="icon" href="favicon.ico" sizes="any">
 <link rel="icon" type="image/png" href="favicon.png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
+<script>document.documentElement.classList.add('js');</script>
 <link rel="preload" href="assets/fonts/atkinson-hyperlegible-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="assets/fonts/atkinson-hyperlegible-latin-700-normal.woff2" as="font" type="font/woff2" crossorigin>
 <script type="application/ld+json">
@@ -293,7 +294,7 @@ a { color: var(--link); text-decoration-thickness: 0.08em; text-underline-offset
 a:hover { text-decoration-thickness: 0.14em; }
 :focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; border-radius: 4px; }
 strong { font-weight: 700; }
-[id] { scroll-margin-top: 1rem; }
+[id] { scroll-margin-top: 5rem; }
 
 .skip {
   position: absolute; left: 1rem; top: -4rem;
@@ -314,8 +315,8 @@ main.wrap, footer .wrap { max-width: calc(var(--measure) + 2.5rem); }
 .hero a { color: var(--hero-sage); }
 .hero :focus-visible { outline-color: var(--hero-gold); }
 .topbar {
-  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
-  gap: 0.75rem 1.5rem; padding-block: 1rem;
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: flex-end;
+  gap: 0.75rem 1.5rem; padding-block: 0.5rem 1rem;
 }
 .site-name { font-weight: 700; font-size: 1.1rem; letter-spacing: 0.01em; color: var(--hero-ink) !important; text-decoration: none; }
 .site-name span { color: var(--hero-sage); }
@@ -346,6 +347,75 @@ h1 {
 .btn-secondary { color: var(--hero-ink) !important; border: 2px solid var(--hero-ink); }
 .btn-primary:hover { background: #f6d896; }
 .btn-secondary:hover { background: rgba(248, 244, 233, 0.12); }
+
+/* Site bar: the section menu, pinned to the top while reading.
+   Narrow: one Menu button opens a panel. Wide: one dropdown per theme.
+   The width test is a container query in rem, so it follows the text-size buttons. */
+.sitebar {
+  background: var(--hero-bg); color: var(--hero-ink);
+  box-shadow: 0 1px 0 rgba(248, 244, 233, 0.16);
+  position: relative; z-index: 20;
+  container-type: inline-size;
+}
+@media (min-height: 30rem) { .sitebar { position: sticky; top: 0; } }
+html:not(.js) .sitenav { display: none; }
+.sitebar :focus-visible { outline-color: var(--hero-gold); }
+.sitebar-inner { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding-block: 0.5rem; }
+.menu-toggle, .group-toggle {
+  font: inherit; font-size: 1.05rem; font-weight: 700; color: var(--hero-ink);
+  background: transparent; border-radius: 6px; min-height: 2.75rem; cursor: pointer;
+  display: inline-flex; align-items: center; gap: 0.5rem;
+}
+.menu-toggle { border: 2px solid var(--hero-muted); padding: 0 0.85rem; }
+.menu-toggle svg { width: 1.15em; height: 1.15em; fill: none; stroke: currentColor; stroke-width: 2.5; stroke-linecap: round; }
+.menu-toggle[aria-expanded="true"] { background: var(--hero-ink); color: var(--hero-bg); border-color: var(--hero-ink); }
+.menu-panel {
+  display: none; position: absolute; left: 0; right: 0; top: 100%;
+  background: var(--hero-bg); border-bottom: 4px solid var(--hero-gold);
+  padding: 0.75rem max(1.25rem, calc((100% - var(--page)) / 2 + 1.25rem)) 1.5rem;
+  max-height: calc(100vh - 4rem); max-height: calc(100dvh - 4rem); overflow-y: auto;
+  gap: 1.25rem 2rem;
+}
+.sitenav[data-open] .menu-panel { display: grid; }
+.group-toggle { display: none; border: 0; padding: 0 0.75rem; }
+.group-label { margin: 0 0 0.25rem; font-size: 1rem; font-weight: 700; color: var(--hero-gold); }
+.group-list { list-style: none; margin: 0; padding: 0; }
+.sitebar .group-list a, .sitebar .group-link {
+  display: flex; align-items: center; min-height: 2.75rem;
+  color: var(--hero-ink); font-size: 1.15rem; text-decoration: none;
+}
+.sitebar .group-list a:hover, .sitebar .group-link:hover { text-decoration: underline; }
+.sitebar .group-link { font-weight: 700; }
+@container (min-width: 36rem) {
+  .menu-panel { grid-template-columns: 1fr 1fr; }
+}
+@container (min-width: 66rem) {
+  .menu-toggle, .group-label { display: none; }
+  .menu-panel {
+    display: flex; position: static; align-items: center; gap: 0.25rem;
+    padding: 0; border: 0; max-height: none; overflow: visible; background: none;
+  }
+  .menu-group { position: relative; }
+  .group-toggle { display: inline-flex; }
+  .group-toggle::after {
+    content: ""; width: 0.45em; height: 0.45em;
+    border-right: 2px solid currentColor; border-bottom: 2px solid currentColor;
+    transform: translateY(-25%) rotate(45deg);
+  }
+  .group-toggle[aria-expanded="true"]::after { transform: translateY(20%) rotate(-135deg); }
+  .group-toggle:hover, .group-toggle[aria-expanded="true"], .sitebar .group-link:hover { background: rgba(248, 244, 233, 0.12); }
+  .group-list {
+    display: none; position: absolute; top: calc(100% + 0.5rem); left: 0; min-width: 15rem;
+    background: var(--hero-bg); border: 2px solid var(--hero-muted); border-top: 4px solid var(--hero-gold);
+    border-radius: 8px; padding: 0.5rem; box-shadow: 0 10px 28px rgba(0, 0, 0, 0.35);
+  }
+  .menu-group:nth-last-child(2) .group-list { left: auto; right: 0; }
+  .menu-group[data-open] .group-list { display: block; }
+  .sitebar .group-list a { padding: 0.25rem 0.75rem; border-radius: 6px; font-size: 1.1rem; white-space: nowrap; }
+  .sitebar .group-list a:hover { background: rgba(248, 244, 233, 0.12); text-decoration: none; }
+  .sitebar .group-link { font-size: 1.05rem; padding: 0 0.75rem; border-radius: 6px; }
+  .sitebar .group-link:hover { text-decoration: none; }
+}
 
 
 /* Content */
@@ -461,13 +531,61 @@ figure.sim { max-width: none; }
 }
 </style>
 </head>
-<body>
+<body id="top">
 <a class="skip" href="#main">Skip to main content</a>
+
+<div class="sitebar">
+  <div class="wrap sitebar-inner">
+    <a class="site-name" href="#top">PRPF31<span>.org</span></a>
+    <nav class="sitenav" aria-label="Sections">
+      <button type="button" class="menu-toggle" aria-expanded="false" aria-controls="menu-panel"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 6h18M3 12h18M3 18h18"/></svg>Menu</button>
+      <div class="menu-panel" id="menu-panel">
+        <div class="menu-group">
+          <button type="button" class="group-toggle" aria-expanded="false" aria-controls="menu-about">About PRPF31</button>
+          <p class="group-label" id="menu-about-label">About PRPF31</p>
+          <ul class="group-list" id="menu-about" aria-labelledby="menu-about-label">
+            <li><a href="#what-is-prpf31">PRPF31 Explained</a></li>
+            <li><a href="#symptoms">Symptoms</a></li>
+            <li><a href="#inheritance">Inheritance</a></li>
+          </ul>
+        </div>
+        <div class="menu-group">
+          <button type="button" class="group-toggle" aria-expanded="false" aria-controls="menu-care">Testing &amp; Care</button>
+          <p class="group-label" id="menu-care-label">Testing &amp; Care</p>
+          <ul class="group-list" id="menu-care" aria-labelledby="menu-care-label">
+            <li><a href="#genetic-testing">Genetic Testing</a></li>
+            <li><a href="#next-steps">Next Steps</a></li>
+          </ul>
+        </div>
+        <div class="menu-group">
+          <button type="button" class="group-toggle" aria-expanded="false" aria-controls="menu-research">Research &amp; Trials</button>
+          <p class="group-label" id="menu-research-label">Research &amp; Trials</p>
+          <ul class="group-list" id="menu-research" aria-labelledby="menu-research-label">
+            <li><a href="#advantage">Our Advantage</a></li>
+            <li><a href="#treatment-research">Research</a></li>
+            <li><a href="#which-trials">Which Trials Fit You</a></li>
+          </ul>
+        </div>
+        <div class="menu-group">
+          <button type="button" class="group-toggle" aria-expanded="false" aria-controls="menu-community">Community</button>
+          <p class="group-label" id="menu-community-label">Community</p>
+          <ul class="group-list" id="menu-community" aria-labelledby="menu-community-label">
+            <li><a href="#why-organize">Why We Organize</a></li>
+            <li><a href="#community">Our Private Group</a></li>
+            <li><a href="#about">About Us</a></li>
+          </ul>
+        </div>
+        <div class="menu-group menu-single">
+          <a class="group-link" href="#faq">Questions</a>
+        </div>
+      </div>
+    </nav>
+  </div>
+</div>
 
 <header class="hero">
   <div class="wrap">
     <div class="topbar">
-      <a class="site-name" href="#top" id="top">PRPF31<span>.org</span></a>
       <div class="textsize" role="group" aria-label="Text size">
         <span class="textsize-label" aria-hidden="true">Text size</span>
         <button type="button" id="size-standard" data-size="standard" aria-pressed="true" aria-label="Standard text size">A</button>
@@ -552,7 +670,8 @@ figure.sim { max-width: none; }
     <p>A genetic test turns a diagnosis of "RP" into "PRPF31 RP." It confirms the cause, helps relatives understand their own risk and is usually needed to take part in clinical trials.</p>
     <p>In the US, the Foundation Fighting Blindness offers <a href="https://www.fightingblindness.org/no-cost-genetic-testing">no-cost genetic testing and counseling</a> for people with a clinical diagnosis of an inherited retinal disease, ordered by any eye care professional. Blood relatives on the affected side of the family can often get <a href="https://preventiongenetics.com/sponsoredTesting/ffb-my-retina-tracker">free testing for the family's PRPF31 change</a>.</p>
     <p>Some PRPF31 changes are large deletions or sit deep inside the gene. Not every test looks for them. When dominant RP runs in a family and no gene has been found, a genetic counselor can advise whether further testing makes sense.</p>
-    <p>Outside the US, <a href="https://retina-international.org">Retina International</a> can point to patient organizations and testing in other countries.</p>
+    <p>In Canada, provincial health plans cover genetic testing for inherited retinal diseases when it is judged appropriate. Fighting Blindness Canada explains <a href="https://www.fightingblindness.ca/resources/genetic-testing-for-inherited-retinal-diseases/">how to get tested in each province</a> and runs a <a href="https://www.fightingblindness.ca/patient-registry">patient registry for Canadians</a>.</p>
+    <p>Elsewhere, <a href="https://retina-international.org">Retina International</a> can point to patient organizations and testing in other countries.</p>
   </section>
 
   <section id="advantage" aria-labelledby="advantage-h">
@@ -612,7 +731,7 @@ figure.sim { max-width: none; }
       </li>
       <li>
         <h3>See a Specialist</h3>
-        <p>Ask for a referral to a retina specialist who sees inherited retinal diseases and keep up regular check-ups.</p>
+        <p>Ask for a referral to a retina specialist who sees inherited retinal diseases and keep up regular check-ups. In the US, the Foundation Fighting Blindness keeps a <a href="https://www.fightingblindness.org/retinal-specialists">list of these doctors</a>.</p>
       </li>
       <li>
         <h3>Talk with Family</h3>
@@ -664,7 +783,7 @@ figure.sim { max-width: none; }
       </div>
       <div>
         <h3>Where Should I Go If I Think I Am Affected?</h3>
-        <p>Start with an eye doctor and ask for a referral to a retina specialist who sees inherited retinal diseases. The specialist can confirm the diagnosis and arrange genetic testing. In the US, the Foundation Fighting Blindness offers <a href="https://www.fightingblindness.org/no-cost-genetic-testing">free testing and counseling</a>.</p>
+        <p>Start with an eye doctor and ask for a referral to a retina specialist who sees inherited retinal diseases. The specialist can confirm the diagnosis and arrange genetic testing. In the US, the Foundation Fighting Blindness keeps a <a href="https://www.fightingblindness.org/retinal-specialists">list of these specialists</a> and offers <a href="https://www.fightingblindness.org/no-cost-genetic-testing">free testing and counseling</a>.</p>
       </div>
       <div>
         <h3>Do I Need to See a Retina Specialist?</h3>
@@ -741,6 +860,51 @@ figure.sim { max-width: none; }
       apply(b.dataset.size);
       try { localStorage.setItem('prpf31-text-size', b.dataset.size); } catch (e) {}
     });
+  });
+})();
+
+(function () {
+  var nav = document.querySelector('.sitenav');
+  if (!nav) { return; }
+  var toggle = nav.querySelector('.menu-toggle');
+  var groups = Array.prototype.slice.call(nav.querySelectorAll('.menu-group'))
+    .filter(function (g) { return g.querySelector('.group-toggle'); });
+  function setGroup(g, open) {
+    if (open) { g.setAttribute('data-open', ''); } else { g.removeAttribute('data-open'); }
+    g.querySelector('.group-toggle').setAttribute('aria-expanded', String(open));
+  }
+  function setMenu(open) {
+    if (open) { nav.setAttribute('data-open', ''); } else { nav.removeAttribute('data-open'); }
+    toggle.setAttribute('aria-expanded', String(open));
+  }
+  function closeAll() {
+    setMenu(false);
+    groups.forEach(function (g) { setGroup(g, false); });
+  }
+  toggle.addEventListener('click', function () { setMenu(!nav.hasAttribute('data-open')); });
+  groups.forEach(function (g) {
+    g.querySelector('.group-toggle').addEventListener('click', function () {
+      var open = !g.hasAttribute('data-open');
+      groups.forEach(function (o) { if (o !== g) { setGroup(o, false); } });
+      setGroup(g, open);
+    });
+    g.addEventListener('focusout', function (e) {
+      if (e.relatedTarget && !g.contains(e.relatedTarget)) { setGroup(g, false); }
+    });
+  });
+  nav.addEventListener('click', function (e) { if (e.target.closest('a')) { closeAll(); } });
+  nav.addEventListener('focusout', function (e) {
+    if (e.relatedTarget && !nav.contains(e.relatedTarget)) { closeAll(); }
+  });
+  document.addEventListener('click', function (e) { if (!nav.contains(e.target)) { closeAll(); } });
+  document.addEventListener('keydown', function (e) {
+    if (e.key !== 'Escape') { return; }
+    var open = groups.filter(function (g) { return g.hasAttribute('data-open'); })[0];
+    var menuOpen = nav.hasAttribute('data-open');
+    if (!open && !menuOpen) { return; }
+    closeAll();
+    if (open && open.contains(document.activeElement)) { open.querySelector('.group-toggle').focus(); }
+    else if (menuOpen) { toggle.focus(); }
   });
 })();
 </script>
